@@ -111,6 +111,11 @@ provider "kubernetes" {
   client_key             = google_container_cluster.primary.master_auth.0.client_key
   cluster_ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
 }
+resource "kubernetes_namespace" "test" {
+  metadata {
+    name = "nginx"
+  }
+}
 resource "kubernetes_deployment" "test" {
   metadata {
     name      = "nginx"
