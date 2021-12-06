@@ -97,25 +97,12 @@ resource "google_container_node_pool" "primary_nodes" {
 
 
 provider "kubernetes" {
-  load_config_file = "false"
-
-  host = google_container_cluster.primary.endpoint
-
-  client_certificate     = file("./.kube/client-cert.pem") #같은 폴더가 아니라 다른 곳에 있을 경우 path를 지정해도 됩니다.
-  client_key             = file("./.kube/client_key.pem") #같은 폴더가 아니라 다른 곳에 있을 경우 path를 지정해도 됩니다.
-  cluster_ca_certificate = file("./.kube/ca.pem") #같은 폴더가 아니라 다른 곳에 있을 경우 path를 지정해도 됩니다.
- }
+  config_path    = "~/.kube/config"
+  config_context = "my-context"
+}
 
 resource "kubernetes_namespace" "example" {
   metadata {
-    annotations = {
-      name = "example-annotation"
-    }
-
-    labels = {
-      mylabel = "label-value"
-    }
-
-    name = "terraform-example-namespace"
+    name = "my-first-namespace"
   }
 }
