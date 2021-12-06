@@ -84,7 +84,7 @@ resource "google_container_node_pool" "primary_nodes" {
 # # To learn how to schedule deployments and services using the provider, go here: https://learn.hashicorp.com/tutorials/terraform/kubernetes-provider.
 
  provider "kubernetes" {
-   load_config_file = "false"
+   #load_config_file = "false"
 
    host     = google_container_cluster.primary.endpoint
    username = var.gke_username
