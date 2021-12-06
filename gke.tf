@@ -98,9 +98,9 @@ resource "google_container_node_pool" "primary_nodes" {
 terraform {
 
 }
-provider "kubernetes" {
-  config_path = "~/.kube/config"
-}
+#provider "kubernetes" {
+#  config_path = "~/.kube/config"
+#}
 provider "kubernetes" {
   load_config_file = "false"
 
