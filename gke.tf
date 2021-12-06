@@ -46,9 +46,14 @@ resource "google_container_node_pool" "primary_nodes" {
   name       = "${google_container_cluster.primary.name}-node-pool"
   #location   = var.region
   location   = var.region
-  node_locations = "asia-northeast1-a, asia-northeast1-b"
+  
   cluster    = google_container_cluster.primary.name
   node_count = var.gke_num_nodes
+  
+   node_locations = [
+    "asia-northeast1-a", 
+    "asia-northeast1-b"
+  ]
 
   node_config {
     oauth_scopes = [
