@@ -95,9 +95,16 @@ resource "google_container_node_pool" "primary_nodes" {
 #   cluster_ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
 # }
 
+
 provider "kubernetes" {
-  load_config_file = "true"
-}
+  load_config_file = "false"
+
+  host = google_container_cluster.primary.endpoint
+
+  client_certificate     = file("./client-cert.pem") #같은 폴더가 아니라 다른 곳에 있을 경우 path를 지정해도 됩니다.
+  client_key             = file("./client_key.pem") #같은 폴더가 아니라 다른 곳에 있을 경우 path를 지정해도 됩니다.
+  cluster_ca_certificate = file("./ca.pem") #같은 폴더가 아니라 다른 곳에 있을 경우 path를 지정해도 됩니다.
+ }
 
 resource "kubernetes_namespace" "example" {
   metadata {
