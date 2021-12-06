@@ -95,17 +95,10 @@ resource "google_container_node_pool" "primary_nodes" {
 #   cluster_ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
 # }
 
-
 provider "kubernetes" {
- #load_config_file = "false"
-
- host     = "34.84.209.70"
- username = var.gke_username
- password = var.gke_password
- client_certificate     = google_container_cluster.primary.master_auth.0.client_certificate
- client_key             = google_container_cluster.primary.master_auth.0.client_key
- cluster_ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
+  load_config_file = "true"
 }
+
 resource "kubernetes_namespace" "example" {
   metadata {
     annotations = {
