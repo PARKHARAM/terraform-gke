@@ -102,7 +102,7 @@ terraform {
 #  config_path = "/var/lib/jenkins/config"
 #}
 provider "kubernetes" {
- load_config_file = "false"
+ #load_config_file = "false"
 
  host     = google_container_cluster.primary.endpoint
  username = var.gke_username
