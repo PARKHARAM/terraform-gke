@@ -101,9 +101,9 @@ provider "kubernetes" {
 
   host = google_container_cluster.primary.endpoint
 
-  client_certificate     = file("./client-cert.pem") #같은 폴더가 아니라 다른 곳에 있을 경우 path를 지정해도 됩니다.
-  client_key             = file("./client_key.pem") #같은 폴더가 아니라 다른 곳에 있을 경우 path를 지정해도 됩니다.
-  cluster_ca_certificate = file("./ca.pem") #같은 폴더가 아니라 다른 곳에 있을 경우 path를 지정해도 됩니다.
+  client_certificate     = file("./.kube/client-cert.pem") #같은 폴더가 아니라 다른 곳에 있을 경우 path를 지정해도 됩니다.
+  client_key             = file("./.kube/client_key.pem") #같은 폴더가 아니라 다른 곳에 있을 경우 path를 지정해도 됩니다.
+  cluster_ca_certificate = file("./.kube/ca.pem") #같은 폴더가 아니라 다른 곳에 있을 경우 path를 지정해도 됩니다.
  }
 
 resource "kubernetes_namespace" "example" {
