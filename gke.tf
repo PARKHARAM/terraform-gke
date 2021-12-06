@@ -82,16 +82,80 @@ resource "google_container_node_pool" "primary_nodes" {
 # # We recommend you put this in another file -- so you can have a more modular configuration.
 # # https://learn.hashicorp.com/terraform/kubernetes/provision-gke-cluster#optional-configure-terraform-kubernetes-provider
 # # To learn how to schedule deployments and services using the provider, go here: https://learn.hashicorp.com/tutorials/terraform/kubernetes-provider.
+#
+# provider "kubernetes" {
+#   #load_config_file = "false"
+#
+#   host     = google_container_cluster.primary.endpoint
+#   username = var.gke_username
+#   password = var.gke_password
+#
+#   client_certificate     = google_container_cluster.primary.master_auth.0.client_certificate
+#   client_key             = google_container_cluster.primary.master_auth.0.client_key
+#   cluster_ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
+# }
 
- provider "kubernetes" {
-   #load_config_file = "false"
-
-   host     = google_container_cluster.primary.endpoint
-   username = var.gke_username
-   password = var.gke_password
-
-   client_certificate     = google_container_cluster.primary.master_auth.0.client_certificate
-   client_key             = google_container_cluster.primary.master_auth.0.client_key
-   cluster_ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
- }
+terraform {
+  required_providers {
+    kubernetes = {
+      source  = "hashicorp/kubernetes"
+      version = ">= 2.0.0"
+    }
+  }
+}
+provider "kubernetes" {
+  config_path = "~/.kube/config"
+}
+resource "kubernetes_namespace" "test" {
+  metadata {
+    name = "nginx"
+  }
+}
+resource "kubernetes_deployment" "test" {
+  metadata {
+    name      = "nginx"
+    namespace = kubernetes_namespace.test.metadata.0.name
+  }
+  spec {
+    replicas = 2
+    selector {
+      match_labels = {
+        app = "MyTestApp"
+      }
+    }
+    template {
+      metadata {
+        labels = {
+          app = "MyTestApp"
+        }
+      }
+      spec {
+        container {
+          image = "nginx"
+          name  = "nginx-container"
+          port {
+            container_port = 80
+          }
+        }
+      }
+    }
+  }
+}
+resource "kubernetes_service" "test" {
+  metadata {
+    name      = "nginx"
+    namespace = kubernetes_namespace.test.metadata.0.name
+  }
+  spec {
+    selector = {
+      app = kubernetes_deployment.test.spec.0.template.0.metadata.0.labels.app
+    }
+    type = "NodePort"
+    port {
+      node_port   = 30201
+      port        = 80
+      target_port = 80
+    }
+  }
+}
 
