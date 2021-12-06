@@ -97,7 +97,7 @@ resource "google_container_node_pool" "primary_nodes" {
 
 
 provider "kubernetes" {
-  config_path    = "~/.kube/config"
+  config_path    = "~/config"
   config_context = "my-context"
 }
 
