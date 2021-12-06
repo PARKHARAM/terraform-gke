@@ -31,7 +31,8 @@ resource "google_container_cluster" "primary" {
   #project = "vcp-share-network"
   
   network    =  "https://www.googleapis.com/compute/v1/projects/vcp-share-network/global/networks/vpc-network"
-  subnetwork = "https://www.googleapis.com/compute/v1/projects/vcp-share-network/regions/asia-northeast3/subnetworks/sbn-test-1"
+  #subnetwork = "https://www.googleapis.com/compute/v1/projects/vcp-share-network/regions/asia-northeast3/subnetworks/sbn-test-1"
+  subnetwork = "https://www.googleapis.com/compute/v1/projects/vcp-share-network/regions/asia-northeast3/subnetworks/sbn-test-4"
   #network = data.google_compute_network.network.name
   
   ip_allocation_policy {
