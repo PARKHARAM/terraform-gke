@@ -99,7 +99,7 @@ terraform {
 
 }
 provider "kubernetes" {
-  config_path = "config"
+  config_path = "/config"
 }
  #provider "kubernetes" {
   #load_config_file = "false"
