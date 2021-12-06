@@ -10,8 +10,7 @@ variable "gke_password" {
 }
 
 variable "gke_num_nodes" {
-  #default     = 1
-  default     = 2
+  default     = 1
   description = "number of gke nodes"
 }
 
@@ -20,7 +19,7 @@ variable "gke_num_nodes" {
 
 resource "google_container_cluster" "primary" {
   name     = "${var.project_id}-gke"
-  location = var.region
+  location = "asia-northeast1-a", "asia-northeast1-b"
   
   # We can't create a cluster with no node pool defined, but we want to only use
   # separately managed node pools. So we create the smallest possible default
