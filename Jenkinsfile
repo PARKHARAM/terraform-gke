@@ -33,7 +33,7 @@
           withCredentials([file(credentialsId: 'haram-gke', variable: 'GC_KEY')]) {
             sh 'gcloud auth activate-service-account --key-file=${GC_KEY}'
             sh 'gcloud container clusters get-credentials haram-326012-gke --region asia-northeast1 --project haram-326012'
-            sh 'kubectl apply -f eck.yaml' 
+            sh 'kubectl apply -f /var/lib/jenkins/eck.yaml' 
                  }
           
         }
