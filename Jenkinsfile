@@ -39,7 +39,7 @@
           sh ("kubectl get nodes") 
           sh ("kubectl apply -f https://download.elastic.co/downloads/eck/1.0.1/all-in-one.yaml")
           sh ("kubectl  apply -f eck.yaml") 
-          
+          sh ("kubectl  apply -f nginx.yaml") 
         }
       }
     } 
