@@ -1,4 +1,4 @@
-apiVersion: elasticsearch.k8s.elastic.co/v1
+apiVersion: elasticsearch.k8s.elastic.co/v2
 kind: Elasticsearch
 metadata:
   name: quickstart
@@ -24,7 +24,7 @@ spec:
           - |
             bin/elasticsearch-plugin install --batch repository-gcs
 ---
-apiVersion: kibana.k8s.elastic.co/v1
+apiVersion: kibana.k8s.elastic.co/v2
 kind: Kibana
 metadata:
   name: kibana-sample
@@ -34,7 +34,7 @@ spec:
   elasticsearchRef:
     name: quickstart
 ---
-apiVersion: apm.k8s.elastic.co/v1
+apiVersion: apm.k8s.elastic.co/v2
 kind: ApmServer
 metadata:
   name: apm-server-sample
