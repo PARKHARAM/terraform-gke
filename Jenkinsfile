@@ -36,6 +36,7 @@
             
                  }
           sh ("kubectl get nodes") 
+          sh ("kubectl  apply -f eck.yaml") 
           
         }
       }
