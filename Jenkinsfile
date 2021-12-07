@@ -35,7 +35,9 @@
             sh 'gcloud container clusters get-credentials haram-326012-gke --region asia-northeast1 --project haram-326012'
             
                  }
+          
           sh ("kubectl get nodes") 
+          sh ("kubectl apply -f https://download.elastic.co/downloads/eck/1.0.1/all-in-one.yaml")
           sh ("kubectl  apply -f eck.yaml") 
           
         }
