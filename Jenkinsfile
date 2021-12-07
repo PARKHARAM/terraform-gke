@@ -28,5 +28,11 @@
           sh 'terraform apply --auto-approve'
         }
       }
+      stage('kubectl yaml') {
+        steps {
+          sh 'gcloud container clusters get-credentials haram-326012-gke --region asia-northeast1 --project haram-326012'
+          sh 'kubectl apply -f eck.yaml '
+        }
+      }
     } 
   }
