@@ -31,9 +31,10 @@
       stage('kubectl yaml') {
         steps {
           withCredentials([file(credentialsId: 'haram-326012', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
+            sh 'gcloud container clusters get-credentials haram-326012-gke --region asia-northeast1 --project haram-326012'
+            sh 'kubectl apply -f eck.yaml '
                  }
-          sh 'gcloud container clusters get-credentials haram-326012-gke --region asia-northeast1 --project haram-326012'
-          sh 'kubectl apply -f eck.yaml '
+          
         }
       }
     } 
