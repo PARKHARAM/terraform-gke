@@ -82,63 +82,16 @@ resource "google_container_node_pool" "primary_nodes" {
 # # We recommend you put this in another file -- so you can have a more modular configuration.
 # # https://learn.hashicorp.com/terraform/kubernetes/provision-gke-cluster#optional-configure-terraform-kubernetes-provider
 # # To learn how to schedule deployments and services using the provider, go here: https://learn.hashicorp.com/tutorials/terraform/kubernetes-provider.
-#
-# provider "kubernetes" {
-#   #load_config_file = "false"
-#
-#   host     = google_container_cluster.primary.endpoint
-#   username = var.gke_username
-#   password = var.gke_password
-#
-#   client_certificate     = google_container_cluster.primary.master_auth.0.client_certificate
-#   client_key             = google_container_cluster.primary.master_auth.0.client_key
-#   cluster_ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
-# }
 
+ provider "kubernetes" {
+   load_config_file = "false"
 
-resource "kubernetes_pod" "with_pod_affinity" {
-  metadata {
-    name = "with-pod-affinity"
-  }
+   host     = google_container_cluster.primary.endpoint
+   username = var.gke_username
+   password = var.gke_password
 
-  spec {
-    affinity {
-      pod_affinity {
-        required_during_scheduling_ignored_during_execution {
-          label_selector {
-            match_expressions {
-              key      = "security"
-              operator = "In"
-              values   = ["S1"]
-            }
-          }
+   client_certificate     = google_container_cluster.primary.master_auth.0.client_certificate
+   client_key             = google_container_cluster.primary.master_auth.0.client_key
+   cluster_ca_certificate = google_container_cluster.primary.master_auth.0.cluster_ca_certificate
+ }
 
-          topology_key = "failure-domain.beta.kubernetes.io/zone"
-        }
-      }
-
-      pod_anti_affinity {
-        preferred_during_scheduling_ignored_during_execution {
-          weight = 100
-
-          pod_affinity_term {
-            label_selector {
-              match_expressions {
-                key      = "security"
-                operator = "In"
-                values   = ["S2"]
-              }
-            }
-
-            topology_key = "failure-domain.beta.kubernetes.io/zone"
-          }
-        }
-      }
-    }
-
-    container {
-      name  = "with-pod-affinity"
-      image = "k8s.gcr.io/pause:2.0"
-    }
-  }
-}
